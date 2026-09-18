@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Alteração de Pedido</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Alterar Pedido</h2>
+
+    <div class="alert alert-danger" th:if="${erro}" th:text="${erro}"></div>
+
+    <div class="alert alert-secondary" th:unless="${pedido.ativo}">
+        Este pedido está <strong th:text="${pedido.status.descricao}"></strong> e não pode mais ser alterado.
+    </div>
+
+    <table class="table table-bordered">
+        <tr>
+            <th style="width: 25%">Cliente</th>
+            <td th:text="${pedido.cliente.nomeCompleto}"></td>
+        </tr>
+        <tr>
+            <th>Data/Hora</th>
+            <td th:text="${#temporals.format(pedido.dataHora, 'dd/MM/yyyy HH:mm')}"></td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td th:text="${pedido.status.descricao}"></td>
+        </tr>
+        <tr>
+            <th>Valor Total</th>
+            <td><strong th:text="${pedido.valorTotal}"></strong></td>
+        </tr>
+    </table>
+
+    <h5 class="mt-4">Produtos do Pedido</h5>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Produto</th>
+            <th>Preço Unitário</th>
+            <th style="width: 20%">Quantidade</th>
+            <th>Subtotal</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${pedido.itens}">
+            <td th:text="${item.produto.nome}"></td>
+            <td th:text="${item.precoUnitario}"></td>
+            <td>
+                <form th:if="${pedido.ativo}" class="d-flex gap-2" method="post"
+                      th:action="@{/pedidos/edit/{id}/item/{itemId}(id=${pedido.id},itemId=${item.id})}">
+                    <input type="number" min="1" name="quantidade" class="form-control form-control-sm"
+                           th:value="${item.quantidade}">
+                    <button type="submit" class="btn btn-sm btn-primary">Alterar</button>
+                </form>
+                <span th:unless="${pedido.ativo}" th:text="${item.quantidade}"></span>
+            </td>
+            <td th:text="${item.subtotal}"></td>
+            <td>
+                <form th:if="${pedido.ativo}" method="post"
+                      th:action="@{/pedidos/edit/{id}/item/{itemId}/remover(id=${pedido.id},itemId=${item.id})}">
+                    <button type="submit" class="btn btn-sm btn-danger">Remover</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:if="${pedido.ativo}">
+        <h5 class="mt-4">Adicionar Produto</h5>
+        <form class="row g-2 align-items-end" method="post"
+              th:action="@{/pedidos/edit/{id}/item/novo(id=${pedido.id})}">
+            <div class="col-md-6">
+                <label for="produtoId" class="form-label">Produto</label>
+                <select class="form-select" id="produtoId" name="produtoId" required>
+                    <option value="">Selecione o produto...</option>
+                    <option th:each="produto : ${produtos}" th:value="${produto.id}"
+                            th:text="${produto.nome} + ' - R$ ' + ${produto.preco} + ' (estoque: ' + ${produto.quantidadeEmEstoque} + ')'"></option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="quantidade" class="form-label">Quantidade</label>
+                <input type="number" min="1" value="1" class="form-control" id="quantidade" name="quantidade" required>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-secondary">Adicionar</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="mt-4">
+        <a th:href="@{/pedidos}" class="btn btn-secondary">Voltar</a>
+        <a th:if="${pedido.ativo}" th:href="@{/pedidos/cancel/{id}(id=${pedido.id})}"
+           class="btn btn-danger">Cancelar Pedido</a>
+    </div>
+</div>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
