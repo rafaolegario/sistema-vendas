@@ -6,12 +6,13 @@
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 </head>
 <body>
+<div th:replace="~{fragments/navbar :: navbar('clientes')}"></div>
 <div class="container mt-4">
     <h1>Clientes</h1>
     <a class="btn btn-primary mb-3" th:href="@{/clientes/novo}">Novo Cliente</a>
 
     <table class="table table-bordered table-striped">
-        <thead class="thead-dark">
+        <thead class="table-dark">
         <tr>
             <th>Nome Completo</th>
             <th>E-mail</th>

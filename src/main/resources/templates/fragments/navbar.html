@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- Navbar comum; "ativo" destaca o módulo da página atual -->
+<nav th:fragment="navbar(ativo)" class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">Sistema de Vendas</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
+                aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menuPrincipal">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${ativo == 'produtos'} ? 'active'" th:href="@{/produtos}">Produtos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${ativo == 'clientes'} ? 'active'" th:href="@{/clientes}">Clientes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:classappend="${ativo == 'pedidos'} ? 'active'" th:href="@{/pedidos}">Pedidos</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

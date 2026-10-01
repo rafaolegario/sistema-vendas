@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title th:unless="${produto.id == null}">Edição de Produto</title>
@@ -8,6 +8,7 @@
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 </head>
 <body>
+<div th:replace="~{fragments/navbar :: navbar('produtos')}"></div>
 <div class="container mt-5">
     <h2 th:text="${produto.id == null} ? 'Novo Produto' : 'Editar Produto'"></h2>
     <form th:action="@{${produto.id == null} ? '/produtos/novo' : '/produtos/edit/' + ${produto.id}}" th:object="${produto}" method="post">
@@ -18,14 +19,14 @@
         </div>
 
         <div class="mb-3">
-            <label for="descricao" class="form-label">Descricao</label>
+            <label for="descricao" class="form-label">Descrição</label>
             <input type="text" class="form-control" id="descricao" th:field="*{descricao}">
             <div class="text-danger" th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}"></div>
         </div>
 
         <div class="mb-3">
             <label for="preco" class="form-label">Preço</label>
-            <input type="number" class="form-control" id="preco" th:field="*{preco}">
+            <input type="number" class="form-control" id="preco" step="0.01" min="0" th:field="*{preco}">
             <div class="text-danger" th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}"></div>
         </div>
 
@@ -39,5 +40,6 @@
         <a th:href="@{/produtos}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>

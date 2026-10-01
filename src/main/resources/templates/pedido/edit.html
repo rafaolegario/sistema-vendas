@@ -6,6 +6,7 @@
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 </head>
 <body>
+<div th:replace="~{fragments/navbar :: navbar('pedidos')}"></div>
 <div class="container mt-5">
     <h2>Alterar Pedido</h2>
 
@@ -30,13 +31,13 @@
         </tr>
         <tr>
             <th>Valor Total</th>
-            <td><strong th:text="${pedido.valorTotal}"></strong></td>
+            <td><strong th:text="${#numbers.formatCurrency(pedido.valorTotal)}"></strong></td>
         </tr>
     </table>
 
     <h5 class="mt-4">Produtos do Pedido</h5>
     <table class="table table-bordered table-striped">
-        <thead class="thead-dark">
+        <thead class="table-dark">
         <tr>
             <th>Produto</th>
             <th>Preço Unitário</th>
@@ -48,7 +49,7 @@
         <tbody>
         <tr th:each="item : ${pedido.itens}">
             <td th:text="${item.produto.nome}"></td>
-            <td th:text="${item.precoUnitario}"></td>
+            <td th:text="${#numbers.formatCurrency(item.precoUnitario)}"></td>
             <td>
                 <form th:if="${pedido.ativo}" class="d-flex gap-2" method="post"
                       th:action="@{/pedidos/edit/{id}/item/{itemId}(id=${pedido.id},itemId=${item.id})}">
@@ -58,7 +59,7 @@
                 </form>
                 <span th:unless="${pedido.ativo}" th:text="${item.quantidade}"></span>
             </td>
-            <td th:text="${item.subtotal}"></td>
+            <td th:text="${#numbers.formatCurrency(item.subtotal)}"></td>
             <td>
                 <form th:if="${pedido.ativo}" method="post"
                       th:action="@{/pedidos/edit/{id}/item/{itemId}/remover(id=${pedido.id},itemId=${item.id})}">
@@ -78,7 +79,7 @@
                 <select class="form-select" id="produtoId" name="produtoId" required>
                     <option value="">Selecione o produto...</option>
                     <option th:each="produto : ${produtos}" th:value="${produto.id}"
-                            th:text="${produto.nome} + ' - R$ ' + ${produto.preco} + ' (estoque: ' + ${produto.quantidadeEmEstoque} + ')'"></option>
+                            th:text="${produto.nome} + ' - ' + ${#numbers.formatCurrency(produto.preco)} + ' (estoque: ' + ${produto.quantidadeEmEstoque} + ')'"></option>
                 </select>
             </div>
             <div class="col-md-3">

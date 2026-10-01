@@ -6,6 +6,7 @@
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 </head>
 <body>
+<div th:replace="~{fragments/navbar :: navbar('pedidos')}"></div>
 <div class="container mt-5">
     <h2>Novo Pedido</h2>
 
@@ -40,7 +41,7 @@
                     <select class="form-select" th:field="*{itens[__${iter.index}__].produto.id}">
                         <option value="">Selecione o produto...</option>
                         <option th:each="produto : ${produtos}" th:value="${produto.id}"
-                                th:text="${produto.nome} + ' - R$ ' + ${produto.preco} + ' (estoque: ' + ${produto.quantidadeEmEstoque} + ')'"></option>
+                                th:text="${produto.nome} + ' - ' + ${#numbers.formatCurrency(produto.preco)} + ' (estoque: ' + ${produto.quantidadeEmEstoque} + ')'"></option>
                     </select>
                 </td>
                 <td>
@@ -74,7 +75,7 @@
             <select class="form-select" name="itens[__IDX__].produto.id">
                 <option value="">Selecione o produto...</option>
                 <option th:each="produto : ${produtos}" th:value="${produto.id}"
-                        th:text="${produto.nome} + ' - R$ ' + ${produto.preco} + ' (estoque: ' + ${produto.quantidadeEmEstoque} + ')'"></option>
+                        th:text="${produto.nome} + ' - ' + ${#numbers.formatCurrency(produto.preco)} + ' (estoque: ' + ${produto.quantidadeEmEstoque} + ')'"></option>
             </select>
         </td>
         <td>

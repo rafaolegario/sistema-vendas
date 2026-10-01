@@ -6,6 +6,7 @@
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 </head>
 <body>
+<div th:replace="~{fragments/navbar :: navbar('pedidos')}"></div>
 <div class="container mt-4">
     <h1>Pedidos</h1>
     <a class="btn btn-primary mb-3" th:href="@{/pedidos/novo}">Novo Pedido</a>
@@ -13,7 +14,7 @@
     <div class="alert alert-danger" th:if="${erro}" th:text="${erro}"></div>
 
     <table class="table table-bordered table-striped">
-        <thead class="thead-dark">
+        <thead class="table-dark">
         <tr>
             <th>Data/Hora</th>
             <th>Cliente</th>
@@ -31,7 +32,7 @@
                 <span th:each="item : ${pedido.itens}" class="d-block"
                       th:text="${item.quantidade} + 'x ' + ${item.produto.nome}"></span>
             </td>
-            <td th:text="${pedido.valorTotal}"></td>
+            <td th:text="${#numbers.formatCurrency(pedido.valorTotal)}"></td>
             <td>
                 <span class="badge" th:classappend="${pedido.ativo} ? 'bg-success' : 'bg-secondary'"
                       th:text="${pedido.status.descricao}"></span>
