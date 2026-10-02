@@ -21,6 +21,9 @@
                     <a class="nav-link" th:classappend="${ativo == 'pedidos'} ? 'active'" th:href="@{/pedidos}">Pedidos</a>
                 </li>
             </ul>
+            <form class="ms-auto" th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-outline-light btn-sm">Sair</button>
+            </form>
         </div>
     </div>
 </nav>
