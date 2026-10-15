@@ -56,7 +56,6 @@ public class PedidoController {
             result.rejectValue("cliente", "cliente.obrigatorio", "Selecione um cliente.");
         }
 
-        // Linhas que o usuário adicionou e deixou sem produto
         pedido.getItens().removeIf(
                 item -> item == null || item.getProduto() == null || item.getProduto().getId() == null);
         if (pedido.getItens().isEmpty()) {
@@ -145,9 +144,7 @@ public class PedidoController {
         return "redirect:/pedidos";
     }
 
-    // O formulário precisa das listas de clientes e produtos também quando volta com erro
     private ModelAndView formView(Pedido pedido) {
-        // Garante ao menos uma linha de produto na tela
         if (pedido.getItens().isEmpty()) {
             pedido.getItens().add(new ItemPedido());
         }

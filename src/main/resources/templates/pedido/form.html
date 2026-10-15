@@ -62,13 +62,8 @@
             <a th:href="@{/pedidos}" class="btn btn-secondary">Cancelar</a>
         </div>
     </form>
-
-    <p class="text-muted mt-3">
-        A data/hora, o valor total e o status <strong>Ativo</strong> são definidos automaticamente ao salvar.
-    </p>
 </div>
 
-<!-- Modelo de linha usado pelo botão "Adicionar Produto" -->
 <template id="modeloLinha">
     <tr>
         <td>
@@ -89,8 +84,6 @@
 
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 <script>
-    // Cada linha nova recebe o próximo índice; índices vagos deixados por
-    // remoções chegam ao controller como linhas em branco e são descartados lá.
     let proximoIndice = document.querySelectorAll('#itens tr').length;
 
     function adicionarLinha() {

@@ -29,7 +29,6 @@ public class ItemPedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Excluído do toString/equals para não gerar recursão com Pedido.itens
     @ManyToOne
     @JoinColumn(name = "pedido_id", nullable = false)
     @ToString.Exclude
@@ -46,7 +45,6 @@ public class ItemPedido {
     @Column(nullable = false)
     private Integer quantidade;
 
-    // Cópia do preço do produto no momento do pedido
     @Column(nullable = false)
     private BigDecimal precoUnitario;
 

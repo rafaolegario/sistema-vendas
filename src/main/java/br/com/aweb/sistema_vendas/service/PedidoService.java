@@ -31,8 +31,6 @@ public class PedidoService {
         pedido.setDataHora(LocalDateTime.now());
         pedido.setStatus(StatusPedido.ATIVO);
 
-        // Os itens chegam do formulário só com produto e quantidade;
-        // preço, subtotal e baixa de estoque são resolvidos aqui.
         var itensDoFormulario = new ArrayList<>(pedido.getItens());
         pedido.setItens(new ArrayList<>());
 
@@ -79,7 +77,6 @@ public class PedidoService {
         if (diferenca > produto.getQuantidadeEmEstoque())
             throw new IllegalArgumentException(mensagemEstoque(produto));
 
-        // Diferença positiva tira do estoque, negativa devolve
         produto.setQuantidadeEmEstoque(produto.getQuantidadeEmEstoque() - diferenca);
         produtoService.salvar(produto);
 
@@ -105,7 +102,7 @@ public class PedidoService {
         return pedidoRepository.save(pedido);
     }
 
-    // CANCEL - o pedido nunca é excluído, apenas muda de status
+    // CANCEL
     @Transactional
     public Pedido cancelar(Long id) {
         var pedido = buscarPedidoAtivo(id);
@@ -131,7 +128,6 @@ public class PedidoService {
         if (quantidade > produto.getQuantidadeEmEstoque())
             throw new IllegalArgumentException(mensagemEstoque(produto));
 
-        // O mesmo produto não entra duas vezes: soma na linha que já existe
         var itemExistente = pedido.getItens().stream()
                 .filter(item -> item.getProduto().getId().equals(produtoId))
                 .findFirst();

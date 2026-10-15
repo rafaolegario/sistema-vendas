@@ -6,10 +6,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class LoginController {
 
-    // Exibe a tela de login; o POST de /login é processado pelo Spring Security
+    // Tela de login
     @GetMapping("/login")
     public String exibirLogin() {
         return "login";
+    }
+
+    // Tela de logout
+    @GetMapping("/logout")
+    public String exibirLogout() {
+        return "logout";
     }
 
 }

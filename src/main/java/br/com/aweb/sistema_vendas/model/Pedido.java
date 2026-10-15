@@ -38,7 +38,6 @@ public class Pedido {
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
-    // Preenchidos pelo PedidoService, nunca pelo formulário
     @Column(nullable = false)
     private LocalDateTime dataHora;
 

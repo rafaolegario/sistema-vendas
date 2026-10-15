@@ -66,7 +66,6 @@ public class ClienteService {
         clienteRepository.deleteById(id);
     }
 
-    // Unicidade: o e-mail/CPF só pode pertencer ao próprio cliente que está sendo editado
     public boolean emailEmUso(String email, Long id) {
         return clienteRepository.findByEmail(email)
                 .filter(cliente -> !cliente.getId().equals(id))

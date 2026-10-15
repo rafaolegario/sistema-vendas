@@ -72,7 +72,6 @@ public class Cliente {
     @Column(nullable = false, length = 9)
     private String cep;
 
-    // Endereço em uma única linha, usado nas listagens
     public String getEnderecoCompleto() {
         var endereco = new StringBuilder(logradouro);
         if (numero != null && !numero.isBlank())

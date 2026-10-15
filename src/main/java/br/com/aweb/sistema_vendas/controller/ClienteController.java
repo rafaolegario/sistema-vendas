@@ -86,7 +86,6 @@ public class ClienteController {
         return "redirect:/clientes";
     }
 
-    // E-mail e CPF não podem se repetir entre clientes
     private void validarUnicidade(Cliente cliente, BindingResult result) {
         if (!result.hasFieldErrors("email") && clienteService.emailEmUso(cliente.getEmail(), cliente.getId())) {
             result.rejectValue("email", "email.duplicado", "Este e-mail já está cadastrado.");
